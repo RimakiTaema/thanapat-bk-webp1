@@ -56,7 +56,7 @@ jobs:
           publish_dir: ./public
           allow_empty_commit: true
 
-      - name: Optional: Push `public/` to external repo (if configured)
+      - name: Push `public/` to external repo (if configured)
         if: ${{ secrets.DEPLOY_TOKEN && secrets.DEPLOY_REPO }}
         run: |
           echo "Pushing public/ to external repository: ${{ secrets.DEPLOY_REPO }}"
