@@ -57,9 +57,15 @@ jobs:
           allow_empty_commit: true
 
       - name: Push `public/` to external repo (if configured)
-        if: ${{ secrets.DEPLOY_TOKEN && secrets.DEPLOY_REPO }}
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          DEPLOY_REPO: ${{ secrets.DEPLOY_REPO }}
         run: |
-          echo "Pushing public/ to external repository: ${{ secrets.DEPLOY_REPO }}"
+          if [ -z "${DEPLOY_TOKEN}" ] || [ -z "${DEPLOY_REPO}" ]; then
+            echo "DEPLOY_TOKEN or DEPLOY_REPO not set — skipping external push"
+            exit 0
+          fi
+          echo "Pushing public/ to external repository: ${DEPLOY_REPO}"
           set -e
           cd public
           git init
@@ -67,5 +73,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "Deploy public (external) [ci skip]" || true
-          GIT_URL="https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/${{ secrets.DEPLOY_REPO }}.git"
+          GIT_URL="https://x-access-token:${DEPLOY_TOKEN}@github.com/${DEPLOY_REPO}.git"
           git push --force "$GIT_URL" HEAD:gh-pages
