@@ -44,7 +44,7 @@ folders.forEach(folder => {
     lines.push('<ul>');
     items.forEach(item => {
       const href = encodeURI(item.rel);
-      lines.push(`<li><a href="${href}">${escapeHtml(item.rel)}</a></li>`);
+      lines.push(`<li><a href="${href}" target="right">${escapeHtml(item.rel)}</a></li>`);
     });
     lines.push('</ul>');
   }
