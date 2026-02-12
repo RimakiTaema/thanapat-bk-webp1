@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <title>คะแนนการสอบกลางภาคเรียน</title>
+        <style>
+            /* 1. FONT IMPORT (Moved to the top) */
+            @import url('https://fonts.googleapis.com/css2?family=Itim&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+            
+            /* 2. BASE STYLING (The original body style) */
+            body {
+                font-family: "Sarabun", sans-serif; /* Use Sarabun as the base font */
+                background-color: azure;
+            }
+
+/* 3. TABLE STYLING */
+            table {
+                
+                border: 1px solid #504949;
+                text-align: center;
+                font-family: Itim, Sarabun, sans-serif; 
+                
+                border-collapse: collapse;
+                width: 100%;
+                
+                border-radius: 25px;
+                overflow: hidden; 
+            }
+
+            /* Ensure padding and cell borders are applied to all table cells */
+            th, td {
+                padding: 10px;
+                border: 1px solid #dddddd; /* Use a light border for cells */
+            }
+
+            .tablehead {
+                background-color: yellow;
+                
+                font-family: Itim, cursive;
+                font-size: 16px;
+                font-weight: bold; 
+            }
+
+            /* Apply radius to the top corner TH elements for visual consistency */
+            .tablehead th:first-child {
+                border-top-left-radius: 25px;
+            }
+            .tablehead th:last-child {
+                border-top-right-radius: 25px;
+            }
+
+            .tabledata1 {
+                font-size: 16px;
+                background-color: cadetblue;
+            }
+            .tabledata2 {
+                font-size: 16px;
+                background-color: yellowgreen;
+            }
+            .tabledata3 {
+                font-size: 16px;
+                background-color: cadetblue;
+            }
+            
+            /* 4. UTILITY CLASSES (If you need them, simplified) */
+            .font-thin { font-weight: 100; }
+            .font-extralight { font-weight: 200; }
+            .font-light { font-weight: 300; }
+            .font-regular { font-weight: 400; }
+            .font-medium { font-weight: 500; }
+            .font-semibold { font-weight: 600; }
+            .font-bold { font-weight: 700; }
+            .font-extrabold { font-weight: 800; }
+            .italic { font-style: italic; }
+
+        </style>
+    </head>
+    <body>
+        <div class="table">
+            <table>
+                <tr class="tablehead">
+                    <th>ที่</th>
+                    <th>รหัสวิขา</th>
+                    <th>ชื่อวิชา</th>
+                    <th>คะแนนเต็ม</th>
+                    <th>คะแนนที่ได้</th>
+                </tr>
+                <tr class="tabledata1">
+                    <td>1</td>
+                    <td>ท33101</td>
+                    <td>ภาษาไทย</td>
+                    <td>50</td>
+                    <td>45</td>
+                </tr>
+                <tr class="tabledata2">
+                    <td>2</td>
+                    <td>ส33101</td>
+                    <td>สังคมศึกษา</td>
+                    <td>50</td>
+                    <td>38</td>
+                </tr>
+                <tr class="tabledata3">
+                    <td>3</td>
+                    <td>ค33101</td>
+                    <td>คณิตศาสตร์</td>
+                    <td>50</td>
+                    <td>25</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
