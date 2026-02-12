@@ -37,17 +37,21 @@ folders.forEach(folder => {
   const dir = path.join(root, folder);
   const items = walkDir(dir, folder);
   const lines = [];
-  lines.push(`<h3>${escapeHtml(folder)}</h3>`);
+  // Tailwind-styled wrapper and list
+  lines.push('<div class="p-4 h-full overflow-auto">');
+  lines.push('<nav>');
   if (items.length === 0) {
-    lines.push(`<p><em>(no items)</em></p>`);
+    lines.push('<p class="text-sm text-gray-500 text-center">(no items)</p>');
   } else {
-    lines.push('<ul>');
+    lines.push('<ul class="space-y-2">');
     items.forEach(item => {
       const href = encodeURI(item.rel);
-      lines.push(`<li><a href="${href}" target="right">${escapeHtml(item.rel)}</a></li>`);
+      lines.push(`<li><a href="${href}" target="right" class="block px-3 py-2 rounded hover:bg-gray-100 text-blue-600">${escapeHtml(item.rel)}</a></li>`);
     });
     lines.push('</ul>');
   }
+  lines.push('</nav>');
+  lines.push('</div>');
   html += lines.map(l => indent + l).join('\n') + '\n';
 });
 

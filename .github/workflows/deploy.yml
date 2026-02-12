@@ -34,7 +34,19 @@ jobs:
         run: |
           rm -rf public
           mkdir -p public
-          rsync -av --include='*/' --include='*.html' --include='assets/***' --include='css/***' --include='exlist/***' --exclude='*' ./ public/
+          # include directories, top-level HTML and chosen static folders
+          rsync -av --include='*/' --include='*.html' --include='assets/**' --include='css/**' --include='exlist/**' --exclude='*' ./ public/
+
+      - name: Show `public/` contents (debug)
+        run: |
+          echo "Public directory contents:" 
+          ls -la public || true
+
+      - name: Upload `public/` as artifact (for debugging)
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-directory
+          path: public
 
       - name: Deploy to GitHub Pages (public/ only)
         uses: peaceiris/actions-gh-pages@v3
@@ -42,3 +54,18 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./public
+          allow_empty_commit: true
+
+      - name: Optional: Push `public/` to external repo (if configured)
+        if: ${{ secrets.DEPLOY_TOKEN && secrets.DEPLOY_REPO }}
+        run: |
+          echo "Pushing public/ to external repository: ${{ secrets.DEPLOY_REPO }}"
+          set -e
+          cd public
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy public (external) [ci skip]" || true
+          GIT_URL="https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/${{ secrets.DEPLOY_REPO }}.git"
+          git push --force "$GIT_URL" HEAD:gh-pages
