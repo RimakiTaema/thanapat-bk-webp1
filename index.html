@@ -1,15 +1,27 @@
 <html>
     <head>
-        <title>Thanapat's Projects</title>
+        <title>Pathum Thani</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" href="assets/tailwind.css">
+        <style>
+            html,body{margin:0;padding:0;height:100%}
+            body{background:#f5f5f5}
+            .noframes{text-align:center;padding:2rem;font-family:system-ui,sans-serif}
+        </style>
     </head>
     <!--This Code Is Depacated (frame,frameset) due to Modern Browser Not Support Or hard to use-->
-    <frameset rows="30%,70%" frameborder="1" border="1">
+    <frameset rows="30%,70%">
         <frame name="top" noresize="noresize" src="top.html">
-        <frameset cols="20%,80%" frameborder="1" border="1">
+        <frameset cols="20%,80%">
             <frame name="left" noresize="noresize" src="left.html">
             <frame name="right" noresize="noresize" src="right.html">
         </frameset>
     </frameset>
+    <noframes>
+        <body>
+            <div class="noframes">
+                <p>Your browser does not support frames.</p>
+                <p>Please use a modern browser to view this site.</p>
+            </div>
+        </body>
+    </noframes>
 </html>
