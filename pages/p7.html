@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>แหล่งท่องเที่ยว</title>
+    <style>
+        .img-container { position: relative; display: inline-block; }
+        .img-fallback { background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; font-family: sans-serif; height: 300px; width: 100%; }
+    </style>
 </head>
 <body>
 
 <h1>แหล่งท่องเที่ยว</h1>
 
-<img src="" alt="แหล่งท่องเที่ยว" style="max-width:600px;">
+<div class="img-container" data-src="https://upload.wikimedia.org/wikipedia/commons/2/27/%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B9%82%E0%B8%9A%E0%B8%AA%E0%B8%96%E0%B9%8C_%E0%B8%AD.%E0%B9%80%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%87_%E0%B8%88.%E0%B8%9B%E0%B8%97%E0%B8%B8%E0%B8%A1%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%B5_%2820%29.jpg" data-timeout="8000">
+    <div class="img-fallback" style="max-width:600px;">⏳ กำลังโหลดรูปภาพ...</div>
+</div>
+
 
 <p>
 วัดเจดีย์ทอง
@@ -21,6 +28,25 @@
 
 ดรีมเวิลด์
 </p>
+
+
+<script>
+(function() {
+    const containers = document.querySelectorAll('.img-container[data-src]');
+    containers.forEach(container => {
+        const src = container.getAttribute('data-src');
+        const timeout = parseInt(container.getAttribute('data-timeout') || '8000');
+        let loaded = false;
+        let timeoutId = setTimeout(() => {
+            if (!loaded) container.innerHTML = `<a href="${src}" target="_blank">📥 คลิกดาวน์โหลดรูปภาพ</a>`;
+        }, timeout);
+        const img = new Image();
+        img.onload = () => { loaded = true; clearTimeout(timeoutId); container.innerHTML = ''; img.style.maxWidth = '600px'; container.appendChild(img); };
+        img.onerror = () => { loaded = true; clearTimeout(timeoutId); container.innerHTML = `<a href="${src}" target="_blank">⚠️ ไม่สามารถโหลดรูปภาพ คลิกเพื่อเปิด</a>`; };
+        img.src = src;
+    });
+})();
+</script>
 
 </body>
 </html>

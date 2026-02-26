@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>ประวัติความเป็นมา</title>
+    <style>
+        .img-container { position: relative; display: inline-block; }
+        .img-fallback { background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; font-family: sans-serif; height: 300px; width: 100%; }
+    </style>
 </head>
 <body>
 
 <h1>ประวัติความเป็นมา</h1>
 
-<img src="https://commons.wikimedia.org/wiki/File:Thailand_Pathum_Thani_location_map.svg" alt="ประวัติความเป็นมา" style="max-width:600px;">
+<div class="img-container" data-src="https://commons.wikimedia.org/wiki/File:Thailand_Pathum_Thani_location_map.svg" data-timeout="8000">
+    <div class="img-fallback" style="max-width:600px;">⏳ กำลังโหลดรูปภาพ...</div>
+</div>
 
 <p>
 จังหวัดปทุมธานีเดิมชื่อว่า “เมืองสามโคก” มีประวัติย้อนไปถึงสมัยกรุงศรีอยุธยา โดยเป็นพื้นที่ตั้งถิ่นฐานของชาวมอญที่อพยพเข้ามาในประเทศไทย ต่อมาในสมัยรัชกาลที่ 2 ได้พระราชทานนามใหม่ว่า “ปทุมธานี” ซึ่งหมายถึง “เมืองดอกบัว” เนื่องจากประชาชนนำดอกบัวมาถวายต้อนรับเสด็จ
 </p>
+
+<script>
+(function() {
+    const containers = document.querySelectorAll('.img-container[data-src]');
+    containers.forEach(container => {
+        const src = container.getAttribute('data-src');
+        const timeout = parseInt(container.getAttribute('data-timeout') || '8000');
+        let loaded = false;
+        let timeoutId = setTimeout(() => {
+            if (!loaded) container.innerHTML = `<a href="${src}" target="_blank">📥 คลิกดาวน์โหลดรูปภาพ</a>`;
+        }, timeout);
+        const img = new Image();
+        img.onload = () => { loaded = true; clearTimeout(timeoutId); container.innerHTML = ''; img.style.maxWidth = '600px'; container.appendChild(img); };
+        img.onerror = () => { loaded = true; clearTimeout(timeoutId); container.innerHTML = `<a href="${src}" target="_blank">⚠️ ไม่สามารถโหลดรูปภาพ คลิกเพื่อเปิด</a>`; };
+        img.src = src;
+    });
+})();
+</script>
 
 </body>
 </html>

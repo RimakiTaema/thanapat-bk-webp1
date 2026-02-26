@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>ภูมิอากาศ</title>
+    <style>
+        .img-container { position: relative; display: inline-block; }
+        .img-fallback { background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; font-family: sans-serif; height: 300px; width: 100%; }
+    </style>
 </head>
 <body>
 
 <h1>ภูมิอากาศ</h1>
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/004_Barge_on_Chao_Phraya_River_%28Menam%29_in_Pathum_Thani_province%2C_Thailand.jpg/250px-004_Barge_on_Chao_Phraya_River_%28Menam%29_in_Pathum_Thani_province%2C_Thailand.jpg" alt="สภาพอากาศดาวเทียม ปทุมธานี" style="max-width:600px;">
+<div class="img-container" data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/004_Barge_on_Chao_Phraya_River_%28Menam%29_in_Pathum_Thani_province%2C_Thailand.jpg/250px-004_Barge_on_Chao_Phraya_River_%28Menam%29_in_Pathum_Thani_province%2C_Thailand.jpg" data-timeout="8000">
+    <div class="img-fallback" style="max-width:600px;">⏳ กำลังโหลดรูปภาพ...</div>
+</div>
 
 <p>
 มีภูมิอากาศแบบร้อนชื้น (เขตร้อนแบบสะวันนา) อุณหภูมิเฉลี่ยประมาณ 27–28 องศาเซลเซียส
@@ -19,6 +23,24 @@
 
 ฤดูหนาว: พฤศจิกายน–กุมภาพันธ์
 </p>
+
+<script>
+(function() {
+    const containers = document.querySelectorAll('.img-container[data-src]');
+    containers.forEach(container => {
+        const src = container.getAttribute('data-src');
+        const timeout = parseInt(container.getAttribute('data-timeout') || '8000');
+        let loaded = false;
+        let timeoutId = setTimeout(() => {
+            if (!loaded) container.innerHTML = `<a href="${src}" target="_blank">📥 คลิกดาวน์โหลดรูปภาพ</a>`;
+        }, timeout);
+        const img = new Image();
+        img.onload = () => { loaded = true; clearTimeout(timeoutId); container.innerHTML = ''; img.style.maxWidth = '600px'; container.appendChild(img); };
+        img.onerror = () => { loaded = true; clearTimeout(timeoutId); container.innerHTML = `<a href="${src}" target="_blank">⚠️ ไม่สามารถโหลดรูปภาพ คลิกเพื่อเปิด</a>`; };
+        img.src = src;
+    });
+})();
+</script>
 
 </body>
 </html>
